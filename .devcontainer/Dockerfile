@@ -69,6 +69,15 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 # Install Claude
 RUN npm install -g @anthropic-ai/claude-code
 
+# Install Python
+USER root
+RUN apt update && apt install -y python3 python3-pip python3-venv
+USER node
+
+# Copy and install Python dependencies
+COPY requirements.txt /tmp/requirements.txt
+RUN pip3 install --user --break-system-packages -r /tmp/requirements.txt
+
 # Copy and set up firewall script
 COPY init-firewall.sh /usr/local/bin/
 USER root
