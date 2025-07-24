@@ -1,0 +1,16 @@
+# Data
+*.xlsx
+
+
+# Cpython
+*.pyc
+
+# Node
+node_modules/
+
+# Docker
+.devcontainer/
+
+
+# Claude
+.claude/
