@@ -11,7 +11,7 @@ services:
     environment:
       - TZ=UTC
       - DEVCONTAINER=true
-      - API_KEY=${API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     volumes:
       # Mount the entire workspace
       - .:/workspace
