@@ -77,7 +77,7 @@ def vulnerable_function_presentation(vulnerabilities: List[Vulnerability]) -> st
 def repo_cloner(repo_slug: str, host: str = "github") -> RepoCloneResponse:
     """Clones a repository and returns the absolute path to the cloned repo.
     Always use this tool to clone repos that are on Github or Gitlab. Repos hosted on other platforms are not supported.
-    If this tool fails, fallback to clone the repo manually using the repo_url and git clone.
+    If this tool fails, fallback to clone the repo manually using the repo_url and git clone. If manually cloning, always clone into the ~/sandbox/temp directory.
     
     Args:
         repo_slug: The slug of the repository to clone.
