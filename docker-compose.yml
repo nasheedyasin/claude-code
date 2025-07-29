@@ -1,0 +1,50 @@
+services:
+  claude-code-dev:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+    container_name: claude-code-dev
+    # Keep container running
+    command: tail -f /dev/null
+    working_dir: /workspace
+    user: node
+    environment:
+      - TZ=UTC
+      - DEVCONTAINER=true
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      # Mount the entire workspace
+      - .:/workspace
+      # Persist command history
+      - claude-code-history:/commandhistory
+      # Persist node modules and npm cache
+      - claude-code-node-modules:/workspace/node_modules
+      - claude-code-npm-cache:/home/node/.npm
+      # Persist Claude config
+      - claude-code-claude-config:/home/node/.claude
+      # Persist Python packages
+      - claude-code-python-packages:/home/node/.local
+    ports:
+      # Common development ports
+      - "3000:3000"   # Node.js dev server
+      - "8001:8000"   # Python dev server (mapped to avoid conflict)
+      - "8080:8080"   # Alternative web server
+      - "9000:9000"   # Additional port
+    networks:
+      - claude-code-network
+    # Enable init to handle signal forwarding properly
+    init: true
+    # Give container access to host networking for some development scenarios
+    # Uncomment if needed:
+    # network_mode: host
+
+volumes:
+  claude-code-history:
+  claude-code-node-modules:
+  claude-code-npm-cache:
+  claude-code-claude-config:
+  claude-code-python-packages:
+
+networks:
+  claude-code-network:
+    driver: bridge 
